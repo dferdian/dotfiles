@@ -189,6 +189,26 @@ else
   ln -sf $current_path/codestyles/scss-style.json ~/.scss-lint.yml
 fi
 
+echo "[ ES Lint ]"
+
+if command_exists eslint; then
+  echo "   ES Lint Installed"
+  ln -sf $current_path/codestyles/eslintrc ~/.eslintrc
+else
+  echo "   Installing ES Lint"
+  npm install -g eslint
+  npm install -g babel-eslint
+  npm install -g eslint-plugin-react
+
+  # If you're using older Node version
+  # To handle `SyntaxError: Use of const in strict mode.` error
+
+  # sudo npm cache clean -f
+  # sudo npm install -g n
+  # sudo n stable
+
+  ln -sf $current_path/codestyles/eslintrc ~/.eslintrc
+fi
 #-----------------------------------------------------
 # Installing FZF
 #-----------------------------------------------------

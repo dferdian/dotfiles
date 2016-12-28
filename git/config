@@ -25,8 +25,8 @@
 	editor = /usr/local/bin/nvim
 	excludesfile = /Users/dhendyferdian/.gitignore_global
 [user]
-  email = dferdian@booster.com
-	name = Dhendy Ferdian
+  email = me@dhendyferdian.com
+	name = dferdian
 [fetch]
   prune = true
 [gitsh]

@@ -167,7 +167,7 @@ set timeoutlen=1000 ttimeoutlen=0
 " #############################################
 let g:syntastic_ruby_checkers = ["mri", "rubocop", "flog", "reek"]
 let g:syntastic_scss_checkers = ["scss_lint"]
-let g:syntastic_javascript_checkers = ["jshint"]
+let g:syntastic_javascript_checkers = ["jshint", "eslint"]
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -290,7 +290,6 @@ autocmd FileType ruby nmap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 autocmd FileType ruby xmap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 autocmd FileType ruby imap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 
-<<<<<<< HEAD
 " JSON Formatter
 nmap =j :%!python -m json.tool<CR>
 
@@ -336,10 +335,11 @@ function! Tabline()
 endfunction
 set tabline=%!Tabline()
 
-=======
 nmap =j :%!python -m json.tool<CR>
 
->>>>>>> 7e88b49... Basic setup and configuration
+" JSX Configuration
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
 " #############################################
 "  Vim-Plug configuration
 " #############################################
@@ -355,6 +355,7 @@ Plug 'craigemery/vim-autotag'
 Plug 'fishbullet/deoplete-ruby'
 Plug 'gregsexton/gitv'
 Plug 'honza/vim-snippets'
+Plug 'hwartig/vim-seeing-is-believing'
 Plug 'janko-m/vim-test'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -362,6 +363,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'kchmck/vim-coffee-script'
 Plug 'matze/vim-move'
+Plug 'mxw/vim-jsx'
 Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'neomake/neomake'
 Plug 'ntpeters/vim-better-whitespace'
@@ -369,6 +371,7 @@ Plug 'rizzatti/dash.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic'
 Plug 'shougo/neosnippet-snippets'
+Plug 't9md/vim-ruby-xmpfilter'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -379,7 +382,5 @@ Plug 'troydm/zoomwintab.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/matchit.zip'
 Plug 'yssl/QFEnter'
-Plug 'hwartig/vim-seeing-is-believing'
-Plug 't9md/vim-ruby-xmpfilter'
 
 call plug#end()
