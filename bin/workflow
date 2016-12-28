@@ -1,0 +1,28 @@
+#!/bin/sh
+
+BASE=${PWD}
+DIR=${PWD##*/}
+
+cd $BASE
+
+## new-session creates first window named 'rails'
+tmux new-session -d -s $DIR -n rails
+
+## setup 1st screen split for server, console and any other terminal purposes
+tmux split-window -t :1 -v
+tmux split-window -t :1.1 -h
+tmux split-window -t :1.2 -h
+tmux rename-window -t :1 rails
+tmux select-pane -t :1.1
+
+## run rails server, console and vim
+# tmux send-keys -t :1.1 "cd $BASE; rails s" C-m
+# tmux send-keys -t :1.3 "cd $BASE; rails c" C-m
+
+tmux new-window -n 'vim' "vim"
+
+### select the vim pane in the rails window
+tmux select-window -t :vim
+
+### make the tmux session active
+tmux attach-session -d -t $DIR

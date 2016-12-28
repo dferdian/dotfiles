@@ -1,0 +1,34 @@
+[color]
+  ui = true
+[push]
+  default = current
+[pull]
+  rebase = true
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  lg = log -p
+  cl = clone
+  next-commit = !git checkout $(git log --reverse --ancestry-path --pretty=%H HEAD..master | head -1)
+  sla = log --oneline --decorate --graph --all -20
+  prev = checkout HEAD^1
+  next = "!sh -c 'git log --reverse --pretty=%H master | awk \"/$(git rev-parse HEAD)/{getline;print}\" | xargs git checkout'"
+  cleanup = "!git branch -r --merged | grep  -v '\\*\\|master\\|staging' | xargs -n 1 git branch -d | xargs -n 1 git push --delete origin"
+  master = checkout master
+  browse = !hub browse
+  pr = !hub browse -- pulls
+  plr = !git checkout master && git fetch origin && git rebase -i origin/master && git pull && git checkout - && git rebase master
+[core]
+	editor = /usr/local/bin/nvim
+	excludesfile = /Users/dhendyferdian/.gitignore_global
+[user]
+  email = dferdian@booster.com
+	name = Dhendy Ferdian
+[fetch]
+  prune = true
+[gitsh]
+  noGreeting = true
+  defaultCommand = status --short --branch && :echo

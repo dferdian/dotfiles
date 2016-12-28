@@ -1,0 +1,44 @@
+#!/bin/bash
+
+SSH_KEY_ALIAS=~/.ssh/id_rsa
+PUBLIC_KEY_ALIAS=~/.ssh/id_rsa.pub
+LINK_TO=`readlink $SSH_KEY_ALIAS`
+FILENAME=${LINK_TO##*/}
+
+# DELETE EXISTING SYMBOLIC LINK
+echo "Delete existing symbolic link ..."
+if [ -f $SSH_KEY_ALIAS ]; then
+  echo "  -- deleting $SSH_KEY_ALIAS"
+  rm $SSH_KEY_ALIAS
+fi
+
+if [ -f $PUBLIC_KEY_ALIAS ]; then
+  echo "  -- deleting $PUBLIC_KEY_ALIAS"
+  rm $PUBLIC_KEY_ALIAS
+fi
+
+# CREATE NEW SYMBOLIC LINK
+echo "Create new symbolic link"
+if [[ $FILENAME == *"dferdian"* ]]
+then
+  NEW_SSH_KEY=dhferdian
+  echo "  -- symbolic link for id_rsa_$NEW_SSH_KEY"
+  ln -s ~/.ssh/id_rsa_dhferdian ~/.ssh/id_rsa
+  echo "  -- symbolic link for id_rsa_$NEW_SSH_KEY.pub"
+  ln -s ~/.ssh/id_rsa_dhferdian.pub ~/.ssh/id_rsa.pub
+elif [[ $FILENAME == *"dhferdian"* ]]
+then
+  NEW_SSH_KEY=dferdian
+  echo "  -- symbolic link for id_rsa_$NEW_SSH_KEY"
+  ln -s ~/.ssh/id_rsa_dferdian ~/.ssh/id_rsa
+  echo "  -- symbolic link for id_rsa_$NEW_SSH_KEY.pub"
+  ln -s ~/.ssh/id_rsa_dferdian.pub ~/.ssh/id_rsa.pub
+fi
+
+## Delete all ssh identities
+ssh-add -D
+
+## re-add identity
+ssh-add ~/.ssh/id_rsa
+echo
+echo "SSH key active: $NEW_SSH_KEY"

@@ -1,0 +1,37 @@
+CommitMsg:
+  CapitalizedSubject:
+    enabled: false
+  EmptyMessage:
+    enabled: true
+    quiet: true
+  SingleLineSubject:
+    enabled: true
+    quiet: true
+  TextWidth:
+    enabled: true
+    quiet: true
+  TrailingPeriod:
+    enabled: true
+    quiet: true
+
+PreCommit:
+  RuboCop:
+    enabled: true
+    on_warn: fail
+    problem_on_unmodified_line: ignore
+    command: ["rubocop", "-c", "../../configs/thoughtbot-ruby.yml"]
+  CoffeeLint:
+    enabled: true
+    on_warn: fail
+    problem_on_unmodified_line: ignore
+    command: ["coffeelint", "-f", "../../configs/coffeescript.json"]
+  JsHint:
+    enabled: true
+    on_warn: fail
+    problem_on_unmodified_line: ignore
+    command: ["jshint", "-c", ".javascript-style.json"]
+  ScssLint:
+    enabled: true
+    on_warn: fail
+    problem_on_unmodified_line: ignore
+    command: ["scss-lint", "-c", ".scss-style.yml"]

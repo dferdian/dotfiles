@@ -1,0 +1,6 @@
+.overcommit.yml
+config/thoughtbot-ruby.yml
+tags
+config.reek
+.DS_STORE
+nvim/plugged/
