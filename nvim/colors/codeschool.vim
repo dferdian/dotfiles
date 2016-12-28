@@ -2,6 +2,7 @@
 " Converted from my Textmate Code School theme using Coloration
 " http://astonj.com
 " xterm 256 color chart https://upload.wikimedia.org/wikipedia/en/1/15/Xterm_256color_chart.svg
+
 set background=dark
 highlight clear
 

@@ -290,6 +290,7 @@ autocmd FileType ruby nmap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 autocmd FileType ruby xmap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 autocmd FileType ruby imap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 
+<<<<<<< HEAD
 " JSON Formatter
 nmap =j :%!python -m json.tool<CR>
 
@@ -335,6 +336,10 @@ function! Tabline()
 endfunction
 set tabline=%!Tabline()
 
+=======
+nmap =j :%!python -m json.tool<CR>
+
+>>>>>>> 7e88b49... Basic setup and configuration
 " #############################################
 "  Vim-Plug configuration
 " #############################################
