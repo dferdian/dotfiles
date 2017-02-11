@@ -77,7 +77,7 @@ Style/CaseIndentation:
   Description: Indentation of when in a case/when/[else/]end.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#indent-when-to-case
   Enabled: true
-  IndentWhenRelativeTo: case
+  EnforcedStyle: case
   SupportedStyles:
     - case
     - end
@@ -249,7 +249,7 @@ Style/NonNilCheck:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-non-nil-checks
   Enabled: true
   IncludeSemanticChanges: false
-Style/MethodDefParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Description: Checks if the method definitions have or don't have parentheses.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#method-parens
   Enabled: true
@@ -332,7 +332,6 @@ Style/RegexpLiteral:
     '/' character.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-r
   Enabled: false
-  MaxSlashes: 1
 Style/Semicolon:
   Description: Don't use semicolons to terminate expressions.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-semicolon
@@ -383,7 +382,7 @@ Style/SpaceAroundBlockParameters:
   Description: Checks the spacing inside and after block parameters pipes.
   Enabled: true
   EnforcedStyleInsidePipes: no_space
-  SupportedStyles:
+  SupportedStylesInsidePipes:
     - space
     - no_space
 Style/SpaceAroundEqualsInParameterDefault:
@@ -533,15 +532,15 @@ Lint/AssignmentInCondition:
 Lint/EndAlignment:
   Description: Align ends correctly.
   Enabled: true
-  AlignWith: keyword
-  SupportedStyles:
+  EnforcedStyleAlignWith: keyword
+  SupportedStylesAlignWith:
     - keyword
     - variable
 Lint/DefEndAlignment:
   Description: Align ends corresponding to defs correctly.
   Enabled: true
-  AlignWith: start_of_line
-  SupportedStyles:
+  EnforcedStyleAlignWith: start_of_line
+  SupportedStylesAlignWith:
     - start_of_line
     - def
 Rails/ActionFilter:
@@ -633,7 +632,7 @@ Style/BlockComments:
 Style/BlockEndNewline:
   Description: Put end statement of multiline block on its own line.
   Enabled: true
-Style/Blocks:
+Style/BlockDelimiters:
   Description: Avoid using {...} for multi-line blocks (multiline chaining is always
     ugly). Prefer {...} over do...end for single-line blocks.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#single-line-blocks
@@ -673,7 +672,7 @@ Style/DefWithParentheses:
   Description: Use def with parentheses when there are arguments.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#method-parens
   Enabled: true
-Style/DeprecatedHashMethods:
+Style/PreferredHashMethods:
   Description: Checks for use of deprecated Hash methods.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#hash-key
   Enabled: false
@@ -748,7 +747,7 @@ Style/LineEndConcatenation:
   Description: Use \ instead of + or << to concatenate two string literals at line
     end.
   Enabled: false
-Style/MethodCallParentheses:
+Style/MethodCallWithoutArgsParentheses:
   Description: Do not use parentheses for method calls with no arguments.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-args-no-parens
   Enabled: true
@@ -901,7 +900,7 @@ Style/UnneededPercentQ:
   Description: Checks for %q/%Q when single quotes or double quotes would do.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-q
   Enabled: true
-Style/UnneededPercentX:
+Style/CommandLiteral:
   Description: Checks for %x when `` would do.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-x
   Enabled: true
@@ -960,7 +959,7 @@ Lint/EnsureReturn:
   Description: Do not use return in an ensure block.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-return-ensure
   Enabled: true
-Lint/Eval:
+Security/Eval:
   Description: The use of eval represents a serious security risk.
   Enabled: true
 Lint/HandleExceptions:
@@ -997,7 +996,7 @@ Lint/ShadowingOuterLocalVariable:
   Description: Do not use the same name as outer local variable for block arguments
     or block local variables.
   Enabled: true
-Lint/SpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Description: Put a space between a method name and the first argument in a method
     call without parentheses.
   Enabled: true
@@ -1048,3 +1047,9 @@ Style/SpaceBeforeFirstArg:
   Description: Checks that exactly one space is used between a method name
     and the first argument for method calls without parentheses.
   Enabled: true
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: no_comma
+  SupportedStylesForMultiline:
+    - comma
+    - consistent_comma
+    - no_comma

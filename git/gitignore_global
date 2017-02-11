@@ -4,3 +4,4 @@ tags
 config.reek
 .DS_STORE
 nvim/plugged/
+.powenv

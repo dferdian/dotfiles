@@ -95,8 +95,8 @@ KEYTIMEOUT=1
 # export CFLAGS="-I/usr/local/Cellar/tesseract/3.04.00/include:-I/usr/local/Cellar/leptonica/1.72/include"
 # export LDFLAGS="-L/usr/local/Cellar/tesseract/3.04.00/lib:-L/usr/local/Cellar/leptonica/1.72/lib"
 
-if [ -d "$HOME/.dotfiles/bin" ] ; then
-  export PATH=$HOME/.dotfiles/bin:$PATH
+if [ -d "$HOME/dotfiles/bin" ] ; then
+  export PATH=$HOME/dotfiles/bin:$PATH
 fi
 
 # added by travis gem
@@ -121,5 +121,15 @@ if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
 fi
 
+export PATH="./bin:$PATH"
+
 alias emacs="emacs -nw"
 alias gplr="git plr"
+alias start_es17="brew unlink elasticsearch@2.4; brew link elasticsearch@1.7; elasticsearch --config=/usr/local/opt/elasticsearch@1.7/config/elasticsearch.yml"
+alias start_es24="brew unlink elasticsearch@1.7; brew link elasticsearch@2.4; elasticsearch"
+alias p_drop="rake parallel:drop[4]"
+alias p_create="rake parallel:create[4]"
+alias p_migrate="rake parallel:migrate[4]"
+alias p_setup="rake parallel:setup[4]"   #loads your database from the schema.rb file instead of using migrations
+alias p_reset="rake parallel:drop[4]; rake parallel:create[4]; rake parallel:setup[4]"
+alias p_specs="rake parallel:spec[4]"

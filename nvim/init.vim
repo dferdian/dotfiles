@@ -165,6 +165,7 @@ set timeoutlen=1000 ttimeoutlen=0
 " #############################################
 "  Syntastic with Neomake Config
 " #############################################
+let g:syntastic_debug = 0
 let g:syntastic_ruby_checkers = ["mri", "rubocop", "flog", "reek"]
 let g:syntastic_scss_checkers = ["scss_lint"]
 let g:syntastic_javascript_checkers = ["jshint", "eslint"]
@@ -208,8 +209,8 @@ let g:neomake_error_sign = {
 " #############################################
 "  Key Mapping
 " #############################################
-map <C-p> :FZF<CR>
-map <C-n> :NERDTreeToggle<CR>
+map <silent> <C-p> :FZF<CR>
+map <silent> <C-n> :NERDTreeToggle<CR>
 
 " #############################################
 "  rspec.vim mapping
@@ -340,6 +341,14 @@ nmap =j :%!python -m json.tool<CR>
 " JSX Configuration
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 
+" Tabular
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:\zs<CR>
+  vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
+
 " #############################################
 "  Vim-Plug configuration
 " #############################################
@@ -382,5 +391,7 @@ Plug 'troydm/zoomwintab.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/matchit.zip'
 Plug 'yssl/QFEnter'
+Plug 'slim-template/vim-slim'
+Plug 'godlygeek/tabular'
 
 call plug#end()
