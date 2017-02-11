@@ -59,6 +59,12 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin"
 
 source $ZSH/oh-my-zsh.sh
 
+# Disable paste text highlighting on ZSH
+zle_highlight+=(paste:none)
+
+# Completely disable new feature bracketed paste
+# unset zle_bracketed_paste
+
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
