@@ -11,263 +11,55 @@ endfunction
 
 call s:SourceConfigFilesIn()
 
-" " #############################################
-" "  Theme configuration
-" " #############################################
-" colorscheme codeschool
+" #############################################
+"  Airline
+" #############################################
 
-" #############################################
-"  Airline configuration
-" #############################################
 let g:airline_powerline_fonts = 1
-
-" Remap number toggle shortcut
-let g:NumberToggleTrigger="<F2>"
-
-" Misc Setup
-set splitbelow
-set splitright
-set cpoptions+=$
-set pastetoggle=<F12>
-set number
-set numberwidth=1
-
-" #############################################
-"  NERDTree
-" #############################################
-augroup AuNERDTreeCmd
-  autocmd!
-augroup end
-
-let g:loaded_netrw       = 1
-let g:loaded_netrwPlugin = 1
-
-" disable Background Color Erase (BCE) by clearing the t_ut terminal option
-" set t_ut=
-
-"set laststatus=0
-set noshowmode
-set noruler
-set noshowcmd
-set nobackup
-set noswapfile
-set nowrap
-
-" Disable Arrow keys in Escape mode
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-
-" Disable Arrow keys in Insert mode
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
-
-hi ColorColumn guibg=#2e373b ctermbg=234
-execute "set colorcolumn=" . join(range(81,335), ',')
-
-" Set split separator to Unicode box drawing character
-" set fillchars="" " vert:│
-
-" Override color scheme to make split the same color as tmux's default
-autocmd ColorScheme * highlight VertSplit cterm=NONE ctermfg=59
-
+let g:airline_highlighting_cache = 1
 let g:airline_skip_empty_sections = 1
-
-" Workaround for tmux navigator on NeoVim
-nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
-
-let g:NERDTreeHijackNetrw = 0
-
-set nowrap                        " don't wrap lines
-set tabstop=2                     " a tab is two spaces
-set shiftwidth=2                  " an autoindent (with <<) is two spaces
-set expandtab                     " use spaces, not tabs
-set list                          " Show invisible characters
-set backspace=indent,eol,start    " backspace through everything in insert mode
-
-" List chars
-set listchars=""                  " Reset the listchars
-set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
-set listchars+=trail:.            " show trailing spaces as dots
-set listchars+=extends:>          " The character to show in the last column when wrap is
-                                  " off and the line continues beyond the right of the screen
-set listchars+=precedes:<         " The character to show in the last column when wrap is
-                                  " off and the line continues beyond the left of the screen
-
-set hlsearch    " highlight matches
-set incsearch   " incremental searching
-set ignorecase  " searches are case insensitive...
-set smartcase   " ... unless they contain at least one capital letter
-
-" Consistent sign column
-hi clear SignColumn
-
-" Place a dummy sign column
-autocmd BufEnter * sign define dummy
-autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
-
-" Enable the list of buffers
 let g:airline#extensions#tabline#enabled = 0
-
-" Show just the filename
 let g:airline#extensions#tabline#fnamemod = ':t'
-
-" This allows buffers to be hidden if you've modified a buffer.
-" This is almost a must if you wish to use buffers in this way.
-set hidden
-
-" Show all open buffers and their status
-nmap <leader>bl :ls<CR>
-
-" Use deoplete (code autocomplete)
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#disable_auto_complete = 1
-
-" Git gutter
-let g:gitgutter_realtime = 1
-let g:gitgutter_eager = 1
-
-set updatetime=100 "suggestion 250
-
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
-endif
-
-" Under cursor search with Ag and FZFg
-function! SearchCurrentWordWithAg() abort
-  execute 'Ag' expand('<cword>')
-endfunction
-
-map <C-s> :call SearchCurrentWordWithAg()<CR>
-map <C-f> :Ag<CR>
-
-" Map write command
-command! WQ wq
-command! Wq wq
-command! W w
-command! Q q
-command! Qa qa
-
-" Resize splits when the window is resized
-autocmd VimResized * :wincmd =
-
-" Mapping keys delay
-set timeoutlen=1000 ttimeoutlen=0
+let g:airline#extensions#ale#enabled = 1
 
 " #############################################
-"  Syntastic with Neomake Config
-" #############################################
-let g:syntastic_debug = 0
-let g:syntastic_ruby_checkers = ["mri", "rubocop", "flog", "reek"]
-let g:syntastic_scss_checkers = ["scss_lint"]
-let g:syntastic_javascript_checkers = ["jshint", "eslint"]
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_check_on_open = 0
-
-let g:syntastic_style_error_symbol = '✗'
-let g:syntastic_style_warning_symbol = '✗'
-let g:syntastic_warning_symbol = '✗'
-
-" Run NeoMake on read and write operations
-autocmd! BufReadPost,BufWritePost * Neomake
-
-" Disable inherited syntastic
-let g:syntastic_mode_map = {
-  \ "mode": "passive",
-  \ "active_filetypes": [],
-  \ "passive_filetypes": [] }
-
-let g:neomake_serialize = 1
-let g:neomake_serialize_abort_on_error = 1
-let g:neomake_verbose=0
-
-let g:neomake_warning_sign = {
-  \   'text': '✗',
-  \   'texthl': 'WarningMsg',
-  \ }
-
-let g:neomake_error_sign = {
-  \   'text': '✗',
-  \   'texthl': 'ErrorMsg',
-  \ }
-
-" #############################################
-"  Key Mapping
-" #############################################
-map <silent> <C-p> :FZF<CR>
-map <silent> <C-n> :NERDTreeToggle<CR>
-
-" #############################################
-"  rspec.vim mapping
+"  ALE Lint
 " #############################################
 
-let test#strategy = "vtr"
+" Move between linting errors
+nnoremap ]r :ALENextWrap<CR>
+nnoremap [r :ALEPreviousWrap<CR>
+
+let g:ale_sign_error = '•'
+let g:ale_sign_warning = '•'
+let g:ale_sign_style_error = '•'
+let g:ale_sign_style_warning = '•'
+let g:ale_sign_info = 'ℹ'
+let g:ale_fix_on_save = 1
+
+" #############################################
+"  vim-test
+" #############################################
+
+let test#strategy = "neoterm"
 let g:test#runner_commands = ["RSpec", "Minitest", "Mocha"]
 
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
-nmap <silent> <leader>a :TestSuite<CR>
-nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
+function! RunTest(cmd)
+   call neoterm#open() " Opens the neoterm window
+   call neoterm#normal('G') " Scroll to the end of the neoterm window
+   exec a:cmd
+endfunction
 
-" #############################################
-"  Using Dispatch or Tslim for dispatcher
-" #############################################
-let g:rspec_runner = 'os_x_iterm2'
-let g:rspec_command = 'VtrSendCommand! rspec {spec}'
-
-" #############################################
-"  VTR (Vim Tmux Runner) and Vim Rspec Runner
-" #############################################
-
-let g:VtrUseVtrMaps = 0
-map <Leader>ro :VtrOpenRunner<CR>
-map <Leader>rk :VtrKillRunner<CR>
-map <Leader>rf :VtrFocusRunner<CR>
-map <Leader>rc :VtrClearRunner<CR>
-map <Leader>rss :VtrSendSelectedToRunner<CR>
-map <Leader>ra :VtrAttachToPane<CR>
-map <leader>rr :VtrSendCommandToRunner<CR>
-
-" #############################################
-"  Neosnippet
-" #############################################
-
-let g:neosnippet#enable_completed_snippet = 1
-let g:neosnippet#snippets_directory = '~/.config/nvim/plugged/vim-snippets/snippets'
-
-" Plugin key-mappings.
-imap <C-s>     <Plug>(neosnippet_expand_or_jump)
-smap <C-s>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-s>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+nmap <silent> <leader>t :call RunTest('TestNearest')<CR>
+nmap <silent> <leader>T :call RunTest('TestFile')<CR>
+nmap <silent> <leader>a :call RunTest('TestSuite')<CR>
+nmap <silent> <leader>l :call RunTest('TestLast')<CR>
+nmap <silent> <leader>g :call RunTest('TestVisit')<CR>
 
 " #############################################
 "  Seeing Is Believing
 " #############################################
+
 let g:xmpfilter_cmd = "seeing_is_believing"
 
 " auto insert mark at appropriate spot.
@@ -291,12 +83,26 @@ autocmd FileType ruby nmap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 autocmd FileType ruby xmap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 autocmd FileType ruby imap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 
-" JSON Formatter
-nmap =j :%!python -m json.tool<CR>
+" #############################################
+"  NEOTERM
+" #############################################
 
-" Tab switcher
-" nnoremap _ gT
-" nnoremap + gt
+nnoremap <Leader>ro :Topen<CR>
+nnoremap <Leader>rk :call neoterm#close()<CR>
+nnoremap <Leader>rc :call neoterm#clear()<CR>
+nnoremap <Leader>rr :call neoterm#clear() \| call neoterm#exec(['!!', '', ''])<CR>
+
+let g:neoterm_autoscroll = 1
+let g:neoterm_size = 10
+let g:neoterm_keep_term_open = 1
+let g:neoterm_test_status_format = 1
+
+command! Troutes :T rake routes
+
+" #############################################
+"  VIM Tabs Configuration
+" #############################################
+
 map <M-=> gt
 map <M--> gT
 map <M-1> 1gt
@@ -336,11 +142,6 @@ function! Tabline()
 endfunction
 set tabline=%!Tabline()
 
-nmap =j :%!python -m json.tool<CR>
-
-" JSX Configuration
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-
 " Tabular
 if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
@@ -350,48 +151,186 @@ if exists(":Tabularize")
 endif
 
 " #############################################
+"  Javascript and JSON Configuration
+" #############################################
+
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
+" JSON Formatter
+nmap =j :%!python -m json.tool<CR>
+
+" Show JSON quotes
+set conceallevel=0
+
+" #############################################
+"  VIM HardMode
+" #############################################
+
+autocmd VimEnter,BufNewFile,BufReadPost * silent! call HardMode()
+nnoremap <leader>h <Esc>:call ToggleHardMode()<CR>
+
+" #############################################
+"  Git Gutter
+" #############################################
+
+let g:gitgutter_realtime = 1
+let g:gitgutter_eager = 1
+
+" #############################################
+"  Find, Search and Replace
+" #############################################
+
+map <silent> <C-p> :FZF<CR>
+
+set grepprg=ag
+let g:grep_cmd_opts = '--line-numbers --noheading'
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
+
+" Under cursor search with Ag and FZF
+function! SearchCurrentWordWithAg() abort
+  execute 'Ag' expand('<cword>')
+endfunction
+
+map <C-s> :call SearchCurrentWordWithAg()<CR>
+map <C-f> :Ag<CR>
+
+" #############################################
+" Misc Configuration
+" #############################################
+
+set splitbelow
+set splitright
+set cpoptions+=$
+set pastetoggle=<F12>
+set number
+set numberwidth=1
+set noshowmode
+set noruler
+set noshowcmd
+set nobackup
+set noswapfile
+set nowrap                        " don't wrap lines
+set tabstop=2                     " a tab is two spaces
+set shiftwidth=2                  " an autoindent (with <<) is two spaces
+set expandtab                     " use spaces, not tabs
+set list                          " Show invisible characters
+set backspace=indent,eol,start    " backspace through everything in insert mode
+set hlsearch                      " highlight matches
+set incsearch                     " incremental searching
+set ignorecase                    " searches are case insensitive...
+set smartcase                     " ... unless they contain at least one capital letter
+set nocompatible
+set ttyfast
+set lazyredraw
+set diffopt+=vertical
+set hidden
+set updatetime=250
+set listchars=""                  " Reset the listchars
+set listchars=tab:\ \             " a tab should display as "  ", trailing whitespace as "."
+set listchars+=trail:.            " show trailing spaces as dots
+set listchars+=extends:>          " The character to show in the last column when wrap is
+                                  " off and the line continues beyond the right of the screen
+set listchars+=precedes:<         " The character to show in the last column when wrap is
+                                  " off and the line continues beyond the left of the screen
+
+hi clear SignColumn
+set timeoutlen=1000 ttimeoutlen=0
+
+" Place a dummy sign column
+autocmd BufEnter * sign define dummy
+autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
+
+hi ColorColumn guibg=#2e373b ctermbg=234
+execute "set colorcolumn=" . join(range(121,335), ',')
+
+" Resize splits when the window is resized
+autocmd VimResized * :wincmd =
+
+" Disable netrw
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+" #############################################
+"  Misc Key Mapping
+" #############################################
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" Disable Arrow keys in Escape mode
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+
+" Disable Arrow keys in Insert mode
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+
+" Relative number toggle mapping
+nnoremap <silent> <F2> :set relativenumber!<cr>
+
+" Map write command
+command! WQ wq
+command! Wq wq
+command! W w
+command! Q q
+command! Qa qa
+
+" #############################################
 "  Vim-Plug configuration
 " #############################################
 call plug#begin()
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neosnippet.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'airblade/vim-gitgutter'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'christoomey/vim-tmux-runner'
-Plug 'craigemery/vim-autotag'
-Plug 'fishbullet/deoplete-ruby'
-Plug 'gregsexton/gitv'
+Plug 'brooth/far.vim'
+Plug 'chemzqm/vim-jsx-improve'
+Plug 'ervandew/supertab'
+Plug 'godlygeek/tabular'
 Plug 'honza/vim-snippets'
 Plug 'hwartig/vim-seeing-is-believing'
 Plug 'janko-m/vim-test'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'junegunn/gv.vim'
 Plug 'kana/vim-textobj-user'
+Plug 'kassio/neoterm'
 Plug 'kchmck/vim-coffee-script'
 Plug 'matze/vim-move'
-Plug 'mxw/vim-jsx'
 Plug 'nelstrom/vim-textobj-rubyblock'
-Plug 'neomake/neomake'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'rizzatti/dash.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
-Plug 'shougo/neosnippet-snippets'
+Plug 'pangloss/vim-javascript'
+Plug 'skwp/greplace.vim'
+Plug 'slim-template/vim-slim'
 Plug 't9md/vim-ruby-xmpfilter'
+Plug 'takac/vim-hardtime'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'troydm/zoomwintab.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/matchit.zip'
+Plug 'w0rp/ale'
 Plug 'yssl/QFEnter'
-Plug 'slim-template/vim-slim'
-Plug 'godlygeek/tabular'
 
 call plug#end()

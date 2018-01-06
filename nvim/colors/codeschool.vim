@@ -53,6 +53,19 @@ hi DiffText ctermfg=231 ctermbg=24 cterm=bold guifg=#f0f0f0 guibg=#204a87 gui=bo
 hi ErrorMsg ctermfg=3 ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
 hi WarningMsg ctermfg=1 ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
 
+hi ALEErrorSign ctermfg=1 ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+hi ALEStyleErrorSign ctermfg=1 ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+hi ALEWarningSign ctermfg=3 ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+hi ALEStyleWarningSign ctermfg=3 ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+hi ALEInfoSign ctermfg=3 ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE gui=NONE
+
+hi clear ALEErrorLine
+hi clear ALEWarningLine
+hi clear ALEInfoLine
+hi clear ALEError
+hi clear ALEWarning
+hi clear ALEInfo
+
 hi Float ctermfg=68 ctermbg=NONE cterm=NONE guifg=#3c98d9 guibg=NONE gui=NONE
 hi Function ctermfg=153 ctermbg=NONE cterm=NONE guifg=#bcdbff guibg=NONE gui=NONE
 hi Identifier ctermfg=113 ctermbg=NONE cterm=NONE guifg=#99cf50 guibg=NONE gui=NONE
