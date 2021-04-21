@@ -11,6 +11,8 @@ endfunction
 
 call s:SourceConfigFilesIn()
 
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 " #############################################
 "  Airline
 " #############################################
@@ -45,7 +47,7 @@ let test#strategy = "neoterm"
 let g:test#runner_commands = ["RSpec", "Minitest", "Mocha"]
 
 function! RunTest(cmd)
-   call neoterm#open() " Opens the neoterm window
+   :Topen " Opens the neoterm window
    call neoterm#normal('G') " Scroll to the end of the neoterm window
    exec a:cmd
 endfunction
@@ -88,14 +90,25 @@ autocmd FileType ruby imap <buffer> <F9> <Plug>(seeing_is_believing-clean)
 " #############################################
 
 nnoremap <Leader>ro :Topen<CR>
-nnoremap <Leader>rk :call neoterm#close()<CR>
-nnoremap <Leader>rc :call neoterm#clear()<CR>
-nnoremap <Leader>rr :call neoterm#clear() \| call neoterm#exec(['!!', '', ''])<CR>
+nnoremap <Leader>rk :Tclose<CR>
+nnoremap <Leader>rc :Tclear<CR>
+nnoremap <Leader>rr :Tclear \| call neoterm#exec({'cmd': ['!!', '', '']})<CR>
+
+" Git commands
+nnoremap <Leader>gl :Tclear \| call neoterm#exec({'cmd': ['git log', '', '']})<CR>
+nnoremap <Leader>gn :Tclear \| call neoterm#exec({'cmd': ['git next', '', '']})<CR>
+nnoremap <Leader>gp :Tclear \| call neoterm#exec({'cmd': ['git prev', '', '']})<CR>
+nnoremap <Leader>gf :Tclear \| call neoterm#exec({'cmd': ['git first', '', '']})<CR>
+
+" Git commands
+nnoremap <Leader>po :PlantumlOpen<CR>
+nnoremap <Leader>ps :PlantumlSave<CR>
 
 let g:neoterm_autoscroll = 1
-let g:neoterm_size = 10
+let g:neoterm_size = 25
 let g:neoterm_keep_term_open = 1
 let g:neoterm_test_status_format = 1
+let g:neoterm_default_mod = 'botright'
 
 command! Troutes :T rake routes
 
@@ -242,6 +255,13 @@ set listchars+=precedes:<         " The character to show in the last column whe
 
 hi clear SignColumn
 set timeoutlen=1000 ttimeoutlen=0
+set re=1
+hi link xmlEndTag xmlTag
+
+set undofile
+set undodir=~/.config/nvim/undodir
+set undolevels=1000
+set undoreload=10000
 
 " Place a dummy sign column
 autocmd BufEnter * sign define dummy
@@ -258,9 +278,12 @@ let g:loaded_netrw       = 1
 let g:loaded_netrwPlugin = 1
 
 " For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
+
+" Override color scheme for split line
+autocmd ColorScheme * highlight VertSplit cterm=NONE ctermfg=59
 
 " #############################################
 "  Misc Key Mapping
@@ -292,19 +315,119 @@ command! W w
 command! Q q
 command! Qa qa
 
+" Move between split pane faster
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+" Markdown Preview
+" let vim_markdown_preview_hotkey='<C-m>'
+" let vim_markdown_preview_github=1
+
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {},
+    \ 'content_editable': v:false,
+    \ 'disable_filename': 0
+    \ }
+
+" #############################################
+"  NERDTree
+" #############################################
+augroup AuNERDTreeCmd
+  autocmd!
+augroup end
+
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+let g:NERDTreeHijackNetrw = 0
+map <silent> <C-n> :NERDTreeToggle<CR>
+
+" #############################################
+"  NeoVim Terminal Config
+" #############################################
+
+" https://github.com/junegunn/fzf.vim/issues/544#issuecomment-457456166
+if has("nvim")
+  au TermOpen * tnoremap <buffer> <Esc> <c-\><c-n>
+  au FileType fzf tunmap <buffer> <Esc>
+endif
+
+" tnoremap <Esc> <C-\><C-n>
+" tnoremap <M-[> <Esc>
+" tnoremap <C-v><Esc> <Esc>
+
+" tnoremap <C-[> <C-\><C-n>
+
+" Switching Windows
+
+" Terminal mode:
+" tnoremap <M-h> <c-\><c-n><c-w>h
+" tnoremap <M-j> <c-\><c-n><c-w>j
+" tnoremap <M-k> <c-\><c-n><c-w>k
+" tnoremap <M-l> <c-\><c-n><c-w>l
+
+" Insert mode:
+" inoremap <M-h> <Esc><c-w>h
+" inoremap <M-j> <Esc><c-w>j
+" inoremap <M-k> <Esc><c-w>k
+" inoremap <M-l> <Esc><c-w>l
+
+" Visual mode:
+" vnoremap <M-h> <Esc><c-w>h
+" vnoremap <M-j> <Esc><c-w>j
+" vnoremap <M-k> <Esc><c-w>k
+" vnoremap <M-l> <Esc><c-w>l
+
+" Normal mode:
+" nnoremap <M-h> <c-w>h
+" nnoremap <M-j> <c-w>j
+" nnoremap <M-k> <c-w>k
+" nnoremap <M-l> <c-w>l
+
+" #############################################
+"  PlantUML Cconfiguration - https://github.com/weirongxu/plantuml-previewer.vim
+" #############################################
+
+au FileType plantuml let g:plantuml_previewer#plantuml_jar_path = get(
+    \  matchlist(system('cat `which plantuml` | grep plantuml.jar'), '\v.*\s[''"]?(\S+plantuml\.jar).*'),
+    \  1,
+    \  0
+    \)
+
+au FileType plantuml let g:plantuml_previewer#save_format = 'svg'
+
+" #############################################
+"  VIM Template
+" #############################################
+
+let g:tmpl_search_paths = ['~/.config/nvim/templates']
+
 " #############################################
 "  Vim-Plug configuration
 " #############################################
 call plug#begin()
 
 Plug 'Townk/vim-autoclose'
+Plug 'aanari/vim-tsx-pretty'
 Plug 'airblade/vim-gitgutter'
+Plug 'aklt/plantuml-syntax'
 Plug 'brooth/far.vim'
 Plug 'chemzqm/vim-jsx-improve'
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
 Plug 'honza/vim-snippets'
 Plug 'hwartig/vim-seeing-is-believing'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'ianks/vim-tsx'
 Plug 'janko-m/vim-test'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -313,14 +436,17 @@ Plug 'junegunn/gv.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'kassio/neoterm'
 Plug 'kchmck/vim-coffee-script'
+Plug 'leafgarland/typescript-vim'
 Plug 'matze/vim-move'
 Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/nerdtree'
 Plug 'skwp/greplace.vim'
 Plug 'slim-template/vim-slim'
 Plug 't9md/vim-ruby-xmpfilter'
 Plug 'takac/vim-hardtime'
+Plug 'tibabit/vim-templates'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -328,9 +454,11 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'troydm/zoomwintab.vim'
+Plug 'tyru/open-browser.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-scripts/matchit.zip'
 Plug 'w0rp/ale'
+Plug 'weirongxu/plantuml-previewer.vim'
 Plug 'yssl/QFEnter'
 
 call plug#end()
